@@ -1,8 +1,8 @@
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.50'
 
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -10,23 +10,8 @@ buildscript {
 }
 
 plugins {
-    id 'java'
-}
-
-group 'de.debuglevel.sparkutils'
-version '0.0.1-SNAPSHOT'
-
-apply plugin: 'kotlin'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm' version "1.2.50"
 }
 
 compileKotlin {
@@ -35,3 +20,42 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+group 'de.debuglevel.sparkutils'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    // Tests
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.2.0'
+    testImplementation 'org.assertj:assertj-core:3.10.0'
+
+    // Logging
+    implementation 'io.github.microutils:kotlin-logging:1.4.9'
+//    compile 'org.slf4j:slf4j-api:1.7.5'
+//    compile 'org.slf4j:slf4j-simple:1.7.5'
+
+    // Spark (REST Server)
+    compileOnly 'com.sparkjava:spark-kotlin:1.0.0-alpha'
+}
+
+//test {
+//    useJUnitPlatform()
+//
+//    testLogging {
+//        events "passed", "skipped", "failed"
+//    }
+//
+//    reports {
+//        html.enabled = true
+//    }
+//}
