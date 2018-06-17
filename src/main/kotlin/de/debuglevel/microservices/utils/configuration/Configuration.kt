@@ -1,4 +1,4 @@
-package de.debuglevel.sparkmicroserviceutils.configuration
+package de.debuglevel.microservices.utils.configuration
 
 import com.natpryce.konfig.*
 import com.natpryce.konfig.ConfigurationProperties.Companion.systemProperties
