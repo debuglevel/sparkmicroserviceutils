@@ -28,7 +28,7 @@ compileTestKotlin {
 }
 
 group 'de.debuglevel.sparkutils'
-version '0.0.6'
+version '0.0.8'
 
 sourceCompatibility = 1.8
 
@@ -50,6 +50,9 @@ dependencies {
 
     // Spark (REST Server)
     compileOnly 'com.sparkjava:spark-kotlin:1.0.0-alpha'
+
+    // Configuration
+    implementation 'com.natpryce:konfig:1.6.9.0'
 }
 
 dokka {

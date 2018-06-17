@@ -1,25 +1,10 @@
 package de.debuglevel.sparkutils.port
 
+import de.debuglevel.sparkutils.configuration.MicroserviceConfiguration
 import mu.KotlinLogging
 import spark.kotlin.port
 
 private val logger = KotlinLogging.logger {}
-
-/**
- * Gets the value of the PORT environment variable, or 4567 if no such environment variable is set.
- *
- * @return value of the PORT environment variable, or 4567 if no such environment variable is set.
- */
-private fun getEnvironmentPort(): Int {
-    // TODO: add more options to figure out a port configuration
-
-    val processBuilder = ProcessBuilder()
-    return if (processBuilder.environment()["PORT"] != null) {
-        Integer.parseInt(processBuilder.environment()["PORT"])
-    } else {
-        4567
-    }
-}
 
 /**
  * Sets the port to a configured port.
@@ -29,7 +14,7 @@ private fun getEnvironmentPort(): Int {
 fun configuredPort() {
     // TODO: Spark fails silently if port is already taken. There should be thrown an exception
 
-    val port = getEnvironmentPort()
+    val port = MicroserviceConfiguration.port
     logger.info("Setting port to $port...")
     port(port)
     //logger.info("Setting port to $port succeeded.")
