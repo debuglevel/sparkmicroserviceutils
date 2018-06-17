@@ -1,6 +1,6 @@
-package de.debuglevel.sparkutils.port
+package de.debuglevel.sparkmicroserviceutils.port
 
-import de.debuglevel.sparkutils.configuration.MicroserviceConfiguration
+import de.debuglevel.sparkmicroserviceutils.configuration.MicroserviceConfiguration
 import mu.KotlinLogging
 import spark.kotlin.port
 
