@@ -1,7 +1,6 @@
 package de.debuglevel.microservices.utils.status
 
 import mu.KotlinLogging
-import org.eclipse.jetty.util.Uptime.getUptime
 import spark.Spark
 import spark.kotlin.get
 import java.lang.management.ManagementFactory
@@ -47,4 +46,4 @@ private fun buildStatusJson(): String {
  * Gets the application uptime in seconds
  */
 private fun getUptime() =
-        ManagementFactory.getRuntimeMXBean().uptime / 1000
+        ManagementFactory.getRuntimeMXBean().uptime / 1_000
