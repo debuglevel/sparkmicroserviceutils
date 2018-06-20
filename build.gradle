@@ -28,7 +28,7 @@ compileTestKotlin {
 }
 
 group 'de.debuglevel.sparkmicroserviceutils'
-version '0.0.13'
+version '0.0.14'
 
 sourceCompatibility = 1.8
 

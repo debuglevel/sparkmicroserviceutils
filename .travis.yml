@@ -7,7 +7,7 @@ before_install:
   - chmod +x gradle/wrapper/gradle-wrapper.jar
 
 script:
-  - ./gradlew build
+  - ./gradlew build sourcesJar javadocJar
 
 notifications:
   email: false
@@ -18,6 +18,15 @@ deploy:
       secure: mLSK8qWNXkrLPsO680AoDm2+SCCdX2WdjWH/f5RZaCrkQlthtLCGgpQCW0+ekYKlS3gtbKebhtHHGDan0fz0yqZwODaLGdeHk2SwofqwhFngDvtE5twZcy3UlX6U52GOKmsufZOO4XBytoy88ChNzjOTk/jxu9TqeJzu9vxY9fEqume2fY4nmHUBe4R32SLESgS81sWiKrt0ei0tyRagAUDAkAhYo7X1UJ9650unWpiE6brG1Toid9NyX8QdQGyG7nIl8akZIc5q9lnQQuBvyFtD584o+ijrCnlYGEIHqv1q8K4pG1D7jl0ITlvq4/KVmp8xqkvOmDh61a/lW1dlenRZU2ZHR281S4iryhIaKaWzP2bqjFo6ar50OWz9zYydOthPPhWKMgNoX02gCRxql5+xmi2BvYHIoj9M/Ho9iGYYeSebpxMhVzZYnMt3psNQ/UZIPXwChM49a0fzId1qy3bNS+ObWdDghbgwPDjaqIvpirBv7ArZgrnU1Wo9EA59MxQFdHjQGsMxsx5KD9CfRFsCtF7GqWAz1UjHLPuqc+Vin+TuSBdnr+AmEE1sH1pInw2xmJUGQ+ssGsKbjZxCuFw2URBVU0CTTCOA+5z0iFKZ/PknCJbi3ln2OFzp8rNdB9l0fUQTajIDrqH0Ue6CelOQVieJKiZROzHMBTtcg2c=
     file_glob: true
     file: "**/build/libs/*.jar"
+    skip_cleanup: true
+    # only deploy on certain conditions: https://docs.travis-ci.com/user/deployment/#Conditional-Releases-with-on%3A
+    on:
+      # only deploy release if commit is tagged
+      tags: true
+
+  # deploy develop to the staging environment
+  - provider: script
+    script: ./gradlew build bintrayUpload --info
     skip_cleanup: true
     # only deploy on certain conditions: https://docs.travis-ci.com/user/deployment/#Conditional-Releases-with-on%3A
     on:
