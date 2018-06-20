@@ -1,0 +1,37 @@
+language: java
+jdk:
+- openjdk8
+
+before_install:
+  - chmod +x gradlew
+  - chmod +x gradle/wrapper/gradle-wrapper.jar
+
+script:
+  - ./gradlew build
+
+notifications:
+  email: false
+
+# if releases are deployed on every commit (not only on tags, deploy.on.tags=false), a tag is needed nevertheless.
+# this creates a custom tag containing a timestamp, as Travis CI would tag it like "untagged-RANDOMHEX"
+before_deploy:
+  - git config --local user.name "Marc Kohaupt (Travis CI)"
+  - git config --local user.email "debuglevel@gmail.com"
+  - git tag "$(date +'%Y-%m-%d_%H-%M-%S')_$(git log --format=%h -1)"
+
+deploy:
+  - provider: releases
+    api_key:
+      secure: mLSK8qWNXkrLPsO680AoDm2+SCCdX2WdjWH/f5RZaCrkQlthtLCGgpQCW0+ekYKlS3gtbKebhtHHGDan0fz0yqZwODaLGdeHk2SwofqwhFngDvtE5twZcy3UlX6U52GOKmsufZOO4XBytoy88ChNzjOTk/jxu9TqeJzu9vxY9fEqume2fY4nmHUBe4R32SLESgS81sWiKrt0ei0tyRagAUDAkAhYo7X1UJ9650unWpiE6brG1Toid9NyX8QdQGyG7nIl8akZIc5q9lnQQuBvyFtD584o+ijrCnlYGEIHqv1q8K4pG1D7jl0ITlvq4/KVmp8xqkvOmDh61a/lW1dlenRZU2ZHR281S4iryhIaKaWzP2bqjFo6ar50OWz9zYydOthPPhWKMgNoX02gCRxql5+xmi2BvYHIoj9M/Ho9iGYYeSebpxMhVzZYnMt3psNQ/UZIPXwChM49a0fzId1qy3bNS+ObWdDghbgwPDjaqIvpirBv7ArZgrnU1Wo9EA59MxQFdHjQGsMxsx5KD9CfRFsCtF7GqWAz1UjHLPuqc+Vin+TuSBdnr+AmEE1sH1pInw2xmJUGQ+ssGsKbjZxCuFw2URBVU0CTTCOA+5z0iFKZ/PknCJbi3ln2OFzp8rNdB9l0fUQTajIDrqH0Ue6CelOQVieJKiZROzHMBTtcg2c=
+    file_glob: true
+    file: "**/build/libs/*.jar"
+    skip_cleanup: true
+    # only deploy on certain conditions: https://docs.travis-ci.com/user/deployment/#Conditional-Releases-with-on%3A
+    on:
+      # only deploy commits of "master" branch
+      branch: master
+      # true: only deploy release if commit is not tagged
+      # false: only deploy release if commit is tagged
+      # if "tags" condition is present, the "branch" condition is ignored
+      # if "tags" condition is not present, "branch" condition is considered
+      #tags: false
