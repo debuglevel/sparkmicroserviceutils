@@ -28,7 +28,7 @@ compileTestKotlin {
 }
 
 group 'de.debuglevel.sparkmicroserviceutils'
-version '0.0.14'
+version '0.0.16'
 
 sourceCompatibility = 1.8
 
@@ -91,6 +91,7 @@ bintray {
     key = System.getenv('BINTRAY_API_KEY')
     publications = ['javaMaven']
     publish = true
+    override = true
     pkg {
         repo = 'maven'
         name = 'sparkmicroserviceutils'

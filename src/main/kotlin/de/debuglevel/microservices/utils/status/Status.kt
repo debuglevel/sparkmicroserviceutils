@@ -11,8 +11,9 @@ var status = "up"
 
 /**
  * Sets a path to /status/ which returns a JSON object about the current server status and environment information
+ * @param clazz A class of the package to show the "version" and "title" attributes for (usually a class of your microservice).
  */
-fun status() {
+fun status(clazz: Class<*>) {
     logger.info("Activating path /status/")
 
     Spark.path("/status") {
@@ -20,16 +21,21 @@ fun status() {
             logger.info("Got request for /status/")
 
             type(contentType = "application/json")
-            buildStatusJson()
+            buildStatusJson(clazz)
         }
     }
 }
 
-private fun buildStatusJson(): String {
+/**
+ * @param clazz A class of the package to show the "version" and "title" attributes for.
+ */
+private fun buildStatusJson(clazz: Class<*>): String {
     return """
                 {
                     "status":"$status",
                     "uptime":"${getUptime()}",
+                    "version":"${Version.getVersion(clazz)}",
+                    "title":"${Version.getTitle(clazz)}",
                     "jvmName":"${ManagementFactory.getRuntimeMXBean().name}",
                     "jvmSpecName":"${ManagementFactory.getRuntimeMXBean().specName}",
                     "jvmSpecVendor":"${ManagementFactory.getRuntimeMXBean().specVendor}",
