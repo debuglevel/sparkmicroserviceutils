@@ -39,3 +39,8 @@ The JSON object looks like this as of version 0.0.12:
     "compilerName":"HotSpot 64-Bit Tiered Compilers"
 }
 ```
+
+## Build and Publish
+Developer's notes on how to publish this artifact on bintray via PowerShell:
+* ensure to increment version in `gradle.build`
+* `$env:BINTRAY_USER = "debuglevel"; $env:BINTRAY_API_KEY = "SUPER_SECRET"; ./gradlew bintrayUpload`
