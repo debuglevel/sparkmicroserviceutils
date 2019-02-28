@@ -22,6 +22,9 @@ Own configuration keys can be access like `MicroserviceConfiguration.configurati
 ### Set port to configured number
 Calling `configuredPort()` sets the port of the web server to the configured port number (`port` or `server.port` as of version 0.0.12).
 
+### Wait until Spark is shut down
+Calling `awaitShutdown()` waits until Spark is shut down. This is especially useful in tests.
+
 ## Status endpoint
 Calling `status()` activates a status/health/diagnostics JSON object on `<HOST>/status/`.
 The JSON object looks like this as of version 0.0.12:

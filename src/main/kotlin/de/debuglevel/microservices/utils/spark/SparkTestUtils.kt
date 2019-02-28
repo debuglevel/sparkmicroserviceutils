@@ -29,7 +29,6 @@ object SparkTestUtils {
      * Access the internals of Spark to check if the "initialized" flag is already set to false.
      */
     private fun isSparkInitialized(): Boolean {
-
         val sparkClass = Spark::class.java
         val getInstanceMethod = sparkClass.getDeclaredMethod("getInstance")
         getInstanceMethod.isAccessible = true
