@@ -52,4 +52,4 @@ private fun buildStatusJson(clazz: Class<*>): String {
  * Gets the application uptime in seconds
  */
 private fun getUptime() =
-        ManagementFactory.getRuntimeMXBean().uptime / 1_000
+    ManagementFactory.getRuntimeMXBean().uptime / 1_000

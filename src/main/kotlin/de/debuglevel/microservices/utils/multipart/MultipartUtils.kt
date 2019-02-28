@@ -18,10 +18,11 @@ object MultipartUtils {
         for (cd in part.getHeader("content-disposition").split(";")) {
             if (cd.trim { it <= ' ' }.startsWith("filename")) {
                 return cd.substring(
-                        cd
-                                .indexOf('=') + 1)
-                        .trim { it <= ' ' }
-                        .replace("\"", "")
+                    cd
+                        .indexOf('=') + 1
+                )
+                    .trim { it <= ' ' }
+                    .replace("\"", "")
             }
         }
 
@@ -37,20 +38,20 @@ object MultipartUtils {
         setup(request)
 
         return request.raw()
-                .getPart(fieldName)
-                .inputStream
-                .reader()
-                .use { it.readText() }
+            .getPart(fieldName)
+            .inputStream
+            .reader()
+            .use { it.readText() }
     }
 
     fun getCheckbox(request: Request, fieldName: String): Boolean {
         setup(request)
 
         return request.raw()
-                .parts
-                .filter { it.name == fieldName }
-                .filter { it.inputStream.reader().use { it -> it.readText() } == "on" }
-                .any()
+            .parts
+            .filter { it.name == fieldName }
+            .filter { it.inputStream.reader().use { it -> it.readText() } == "on" }
+            .any()
     }
 
     /**
@@ -66,11 +67,11 @@ object MultipartUtils {
 
         val temporarySurveyFile = createTempFile("sparkmicroserviceutils").toPath()
         request.raw()
-                .getPart(fieldName) // getPart needs to use same "name" as input field in form
-                .inputStream
-                .use {
-                    Files.copy(it, temporarySurveyFile, StandardCopyOption.REPLACE_EXISTING)
-                }
+            .getPart(fieldName) // getPart needs to use same "name" as input field in form
+            .inputStream
+            .use {
+                Files.copy(it, temporarySurveyFile, StandardCopyOption.REPLACE_EXISTING)
+            }
         logger.debug("Uploaded file '${getOriginalFilename(request.raw().getPart(fieldName))}' saved as '${temporarySurveyFile.toAbsolutePath()}'")
         return temporarySurveyFile
     }
